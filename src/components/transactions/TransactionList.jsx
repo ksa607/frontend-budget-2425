@@ -1,17 +1,16 @@
 // src/components/transactions/TransactionList.jsx
 import { useState, useMemo } from 'react';
-import Transaction from './Transaction';
+import TransactionsTable from './TransactionsTable'; 
 import { TRANSACTION_DATA } from '../../api/mock_data';
 
 export default function TransactionList() {
-  const [text, setText] = useState(''); // 👈 1
-  const [search, setSearch] = useState(''); // 👈 1
+  const [text, setText] = useState('');
+  const [search, setSearch] = useState('');
 
   const filteredTransactions = useMemo(
     () =>
       TRANSACTION_DATA.filter((t) => {
-        console.log('filtering...');
-        return t.place.toLowerCase().includes(search.toLowerCase());
+        return t.place.name.toLowerCase().includes(search.toLowerCase());
       }),
     [search],
   );
@@ -28,7 +27,6 @@ export default function TransactionList() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        {/* 👆 2 en 3 */}
         <button
           type='button'
           className='btn btn-outline-primary'
@@ -36,12 +34,11 @@ export default function TransactionList() {
         >
           Search
         </button>
-        {/* 👆 4 */}
       </div>
-      {/* 👇 6*/}
-      {filteredTransactions.map((trans, index) => (
-        <Transaction {...trans} key={index} />
-      ))}
+
+      <div className='mt-4'>
+        <TransactionsTable transactions={filteredTransactions} />
+      </div>
     </>
   );
 }
