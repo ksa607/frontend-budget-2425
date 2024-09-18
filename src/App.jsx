@@ -1,5 +1,6 @@
 import Transaction from './components/transactions/Transaction';
-import TRANSACTION_DATA from './api/mock_data';
+import { TRANSACTION_DATA } from './api/mock_data';
+import PlacesList from './components/places/PlacesList';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           {...trans}
         />
       ))}
+      <PlacesList />
     </div>
   );
 }
