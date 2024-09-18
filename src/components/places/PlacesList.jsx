@@ -1,10 +1,14 @@
-// src/components/places/PlacesList.jsx
 import { useState } from 'react';
 import { PLACE_DATA } from '../../api/mock_data';
 import Place from './Place';
 
 const PlacesList = () => {
   const [places, setPlaces] = useState(PLACE_DATA);
+
+  const handleRatePlace = (id, rating) => {
+    const newPlaces = places.map((p) => (p.id === id ? { ...p, rating } : p));
+    setPlaces(newPlaces);
+  };
 
   const handleDeletePlace = (id) => {
     setPlaces((places) => places.filter((p) => p.id !== id));
@@ -21,7 +25,11 @@ const PlacesList = () => {
             )
             .map((p) => (
               <div className='col' key={p.id}>
-                <Place {...p} onDelete={handleDeletePlace} />
+                <Place
+                  {...p}
+                  onDelete={handleDeletePlace}
+                  onRate={handleRatePlace}
+                />
               </div>
             ))}
         </div>
