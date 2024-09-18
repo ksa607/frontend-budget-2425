@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import TransactionList from './pages/transactions/TransactionList';
 import PlacesList from './pages/places/PlacesList';
 import NotFound from './pages/NotFound';
-import About from './pages/about/About.jsx';
+import About, { Services, History, Location } from './pages/about/About.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,24 @@ const router = createBrowserRouter([
   },
   { path: 'transactions', element: <TransactionList /> },
   { path: 'places', element: <PlacesList /> },
-  { path: 'about', element: <About /> },
+  {
+    path: 'about',
+    element: <About />,
+    children: [
+      {
+        path: 'services',
+        element: <Services />,
+      },
+      {
+        path: 'history',
+        element: <History />,
+      },
+      {
+        path: 'location',
+        element: <Location />,
+      },
+    ],
+  },
   { path: '*', element: <NotFound /> },
 ]);
 
