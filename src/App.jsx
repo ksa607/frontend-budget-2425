@@ -1,11 +1,22 @@
-import TransactionList from './components/transactions/TransactionList';
-import PlacesList from './components/places/PlacesList';
+// src/App.jsx
+import { Link } from 'react-router-dom'; 
 
 function App() {
   return (
     <div>
-      <TransactionList /> 
-      <PlacesList />
+      <h1>Welkom!</h1>
+      <p>Kies één van de volgende links:</p>
+      <ul>
+        <li>
+          <Link to='/transactions'>Transacties</Link> 
+        </li>
+        <li>
+          <Link to='/places'>Plaatsen</Link> 
+        </li>
+        <li>
+          <Link to='/about'>Over ons</Link> 
+        </li>
+      </ul>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 // src/components/transactions/TransactionList.jsx
 import { useState, useMemo } from 'react';
-import TransactionsTable from './TransactionsTable'; 
+import TransactionsTable from '../../components/transactions/TransactionsTable'; 
 import { TRANSACTION_DATA } from '../../api/mock_data';
 
 export default function TransactionList() {
