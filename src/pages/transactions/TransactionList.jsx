@@ -2,16 +2,29 @@
 import { useState, useMemo, useEffect } from 'react';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
 import * as transactionsApi from '../../api/transactions';
+import AsyncData from '../../components/AsyncData';
 
 export default function TransactionList() {
   const [text, setText] = useState('');
   const [search, setSearch] = useState('');
   const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTransactions = async () => {
-      const data = await transactionsApi.getAll();
-      setTransactions(data);
+
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await transactionsApi.getAll();
+        setTransactions(data);
+      } catch (error) {
+        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchTransactions();
@@ -47,7 +60,11 @@ export default function TransactionList() {
       </div>
 
       <div className='mt-4'>
-        <TransactionsTable transactions={filteredTransactions} />
+        <AsyncData loading={loading} error={error}>
+          {!error ? (
+            <TransactionsTable transactions={filteredTransactions} />
+          ) : null}
+        </AsyncData>
       </div>
     </>
   );
