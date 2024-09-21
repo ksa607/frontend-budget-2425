@@ -1,34 +1,19 @@
 // src/pages/transactions/TransactionList.jsx
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
-import * as transactionsApi from '../../api/transactions';
 import AsyncData from '../../components/AsyncData';
+import useSWR from 'swr'; 
+import { getAll } from '../../api'; 
 
 export default function TransactionList() {
   const [text, setText] = useState('');
   const [search, setSearch] = useState('');
-  const [transactions, setTransactions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await transactionsApi.getAll();
-        setTransactions(data);
-      } catch (error) {
-        console.error(error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTransactions();
-  }, []);
+  const {
+    data: transactions = [],
+    isLoading,
+    error,
+  } = useSWR('transactions', getAll);
 
   const filteredTransactions = useMemo(
     () =>
@@ -60,7 +45,7 @@ export default function TransactionList() {
       </div>
 
       <div className='mt-4'>
-        <AsyncData loading={loading} error={error}>
+        <AsyncData loading={isLoading} error={error}>
           {!error ? (
             <TransactionsTable transactions={filteredTransactions} />
           ) : null}
