@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Place = ({ id, name, rating, onDelete, onRate }) => {
   const handleRate = (newRating) => {
-    onRate(id, newRating);
+    onRate({ id, name, rating: newRating });
   };
   const handleDelete = () => {
     onDelete(id);

@@ -1,41 +1,23 @@
-import { useState } from 'react';
-import { PLACE_DATA } from '../../api/mock_data';
-import Place from '../../components/places/Place';
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
+import PlacesCards from '../../components/places/PlacesCards';
+import { getAll, updateById, deleteById } from '../../api';
+import AsyncData from '../../components/AsyncData';
 
-const PlacesList = () => {
-  const [places, setPlaces] = useState(PLACE_DATA);
+export default function PlacesList() {
+  const { data, error, isLoading } = useSWR('places', getAll);
 
-  const handleRatePlace = (id, rating) => {
-    const newPlaces = places.map((p) => (p.id === id ? { ...p, rating } : p));
-    setPlaces(newPlaces);
-  };
+  const { trigger: deletePlace, error: deleteError } = useSWRMutation('places', deleteById);
 
-  const handleDeletePlace = (id) => {
-    setPlaces((places) => places.filter((p) => p.id !== id));
-  };
+  const { trigger: savePlace, error: saveError } = useSWRMutation('places', updateById);
 
   return (
     <>
       <h1>Places</h1>
-      <div className='grid mt-3'>
-        <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-3'>
-          {places
-            .sort((a, b) =>
-              a.name.toUpperCase().localeCompare(b.name.toUpperCase()),
-            )
-            .map((p) => (
-              <div className='col' key={p.id}>
-                <Place
-                  {...p}
-                  onDelete={handleDeletePlace}
-                  onRate={handleRatePlace}
-                />
-              </div>
-            ))}
-        </div>
-      </div>
+
+      <AsyncData loading={isLoading} error={error || deleteError || saveError}>
+        <PlacesCards places={data} onRate={savePlace} onDelete={deletePlace} />
+      </AsyncData>
     </>
   );
-};
-
-export default PlacesList;
+}
