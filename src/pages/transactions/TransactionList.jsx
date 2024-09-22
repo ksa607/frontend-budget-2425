@@ -2,8 +2,9 @@
 import { useState, useMemo } from 'react';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
 import AsyncData from '../../components/AsyncData';
-import useSWR from 'swr'; 
-import { getAll } from '../../api'; 
+import useSWR from 'swr';
+import useSWRMutation from 'swr/mutation';
+import { getAll, deleteById } from '../../api';
 
 export default function TransactionList() {
   const [text, setText] = useState('');
@@ -14,6 +15,11 @@ export default function TransactionList() {
     isLoading,
     error,
   } = useSWR('transactions', getAll);
+
+  const { trigger: deleteTransaction, error: deleteError } = useSWRMutation(
+    'transactions',
+    deleteById,
+  );
 
   const filteredTransactions = useMemo(
     () =>
@@ -45,10 +51,8 @@ export default function TransactionList() {
       </div>
 
       <div className='mt-4'>
-        <AsyncData loading={isLoading} error={error}>
-          {!error ? (
-            <TransactionsTable transactions={filteredTransactions} />
-          ) : null}
+        <AsyncData loading={isLoading} error={error || deleteError}>
+          <TransactionsTable transactions={filteredTransactions} onDelete={deleteTransaction}/>
         </AsyncData>
       </div>
     </>

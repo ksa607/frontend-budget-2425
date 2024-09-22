@@ -1,7 +1,7 @@
 // src/components/transactions/TransactionsTable.jsx
 import Transaction from './Transaction';
 
-function TransactionsTable({ transactions }) {
+function TransactionsTable({ transactions, onDelete }) {
   if (transactions.length === 0) {
     return (
       <div className='alert alert-info'>There are no transactions yet.</div>
@@ -17,11 +17,12 @@ function TransactionsTable({ transactions }) {
             <th>User</th>
             <th>Place</th>
             <th className='text-end'>Amount</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((transaction) => (
-            <Transaction key={transaction.id} {...transaction} />
+            <Transaction key={transaction.id} {...transaction} onDelete={onDelete} />
           ))}
         </tbody>
       </table>
