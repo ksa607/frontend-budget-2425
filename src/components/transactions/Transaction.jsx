@@ -27,9 +27,9 @@ export default function Transaction({ id, date, amount, user, place, onDelete })
       <td>{place.name}</td>
       <td className='text-end'>{amountFormat.format(amount)}</td>
       <td>
-        <button className='btn btn-primary' onClick={handleDelete}>
+        {onDelete ? <button className='btn btn-primary' onClick={handleDelete}>
           <IoTrashOutline />
-        </button>
+        </button> : ''}
       </td>
     </tr>
   );
