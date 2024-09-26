@@ -1,6 +1,7 @@
 // src/components/places/Place.jsx
 import StarRating from './StarRating';
 import { Link } from 'react-router-dom';
+import { IoTrashOutline } from 'react-icons/io5';
 
 const Place = ({ id, name, rating, onDelete, onRate }) => {
   const handleRate = (newRating) => {
@@ -18,7 +19,7 @@ const Place = ({ id, name, rating, onDelete, onRate }) => {
           <StarRating selectedStars={rating} onRate={handleRate} />
         </div>
         <button className='btn btn-primary' onClick={handleDelete}>
-          Verwijder
+          <IoTrashOutline />
         </button>
       </div>
     </div>
