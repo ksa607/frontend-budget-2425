@@ -5,6 +5,7 @@ import AsyncData from '../../components/AsyncData';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getAll, deleteById } from '../../api';
+import {Link} from 'react-router-dom';
 
 export default function TransactionList() {
   const [text, setText] = useState('');
@@ -48,11 +49,16 @@ export default function TransactionList() {
         >
           Search
         </button>
+        <div className='clearfix'>
+          <Link to='/transactions/add' className='btn btn-primary float-end'>
+            Add transaction
+          </Link>
+        </div>
       </div>
 
       <div className='mt-4'>
         <AsyncData loading={isLoading} error={error || deleteError}>
-          <TransactionsTable transactions={filteredTransactions} onDelete={deleteTransaction}/>
+          <TransactionsTable transactions={filteredTransactions} onDelete={deleteTransaction} />
         </AsyncData>
       </div>
     </>

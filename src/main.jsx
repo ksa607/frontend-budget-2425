@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import About, { Services, History, Location } from './pages/about/About.jsx';
 import Layout from './pages/Layout';
 import './index.css';
+import AddOrEditTransaction from './pages/transactions/AddOrEditTransaction.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,20 @@ const router = createBrowserRouter([
       },
       {
         path: '/transactions',
-        element: <TransactionList />,
+        children: [
+          {
+            index: true,
+            element: <TransactionList />,
+          },
+          {
+            path: 'add',
+            element: <AddOrEditTransaction />,
+          },
+          {
+            path: 'edit/:id',
+            element: <AddOrEditTransaction />,
+          },
+        ],
       },
       {
         path: '/places',

@@ -1,4 +1,5 @@
-import { IoTrashOutline } from 'react-icons/io5';
+import { IoTrashOutline, IoPencilOutline } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 // kan ook met react-intl (https://formatjs.io/docs/getting-started/installation/)
 const dateFormat = new Intl.DateTimeFormat('nl-BE', {
@@ -27,6 +28,9 @@ export default function Transaction({ id, date, amount, user, place, onDelete })
       <td>{place.name}</td>
       <td className='text-end'>{amountFormat.format(amount)}</td>
       <td>
+        <Link to={`/transactions/edit/${id}`} className='btn btn-light'>
+          <IoPencilOutline />
+        </Link>
         {onDelete ? <button className='btn btn-primary' onClick={handleDelete}>
           <IoTrashOutline />
         </button> : ''}
