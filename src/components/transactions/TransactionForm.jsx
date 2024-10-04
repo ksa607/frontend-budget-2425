@@ -1,6 +1,8 @@
 // src/components/transactions/TransactionForm.jsx
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import LabelInput from '../LabelInput';
+import { FormProvider, useForm } from 'react-hook-form';
+import SelectList from '../SelectList';
 
 const EMPTY_TRANSACTION = {
   id: undefined,
@@ -55,7 +57,7 @@ const validationRules = {
 export default function TransactionForm({ places = [], transaction = EMPTY_TRANSACTION, saveTransaction }) {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+  const methods = useForm({
     mode: 'onBlur',
     defaultValues: {
       date: toDateInputString(transaction?.date),
@@ -64,6 +66,11 @@ export default function TransactionForm({ places = [], transaction = EMPTY_TRANS
       userId: transaction?.user.id,
     },
   });
+
+  const {
+    handleSubmit,
+    formState: { isValid, isSubmitting },
+  } = methods;
 
   const onSubmit = async (values) => {
     if (!isValid) return;
@@ -77,79 +84,50 @@ export default function TransactionForm({ places = [], transaction = EMPTY_TRANS
   };
 
   return (
-    <>
+    <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='w-50 mb-3'>
-        <div className='mb-3'>
-          <label htmlFor='userId' className='form-label'>
-            User Id
-          </label>
-          <input
-            {...register('userId', validationRules.userId)}
-            id="user"
-            type="number"
-            className="form-control"
-            placeholder="userid"
-            required
-          />
-          {errors.userId && <p className="form-text text-danger">{errors.userId.message}</p>}
-        </div>
-        <div className='mb-3'>
-          <label htmlFor='date' className='form-label'>
-            Date
-          </label>
-          <input
-            {...register('date', validationRules.date)}
-            id='date'
-            type='date'
-            className='form-control'
-            placeholder='date'
-          />
-          {errors.date && <p className="form-text text-danger">{errors.date.message}</p>}
-        </div>
-        <div className='mb-3'>
-          <label htmlFor='places' className='form-label'>
-            Place
-          </label>
-          <select
-            {...register('placeId', validationRules.place)}
-            id='places'
-            className='form-select'
-            required
-          >
-            <option value='' disabled>
-              -- Select a place --
-            </option>
-            {places.map(({ id, name }) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-          {errors.placeId && <p className="form-text text-danger">{errors.placeId.message}</p>}
-        </div>
-        <div className='mb-3'>
-          <label htmlFor='amount' className='form-label'>
-            Amount
-          </label>
-          <input
-            {...register('amount', validationRules.amount)}
-            id='amount'
-            type='number'
-            className='form-control'
-            required
-          />
-          {errors.amount && <p className="form-text text-danger">{errors.amount.message}</p>}
-        </div>
+        <LabelInput
+          label='User Id'
+          name='userId'
+          type='number'
+          validationRules={validationRules.userId}
+        />
+        <LabelInput
+          label='Date'
+          name='date'
+          type='date'
+          validationRules={validationRules.date}
+        />
+        <SelectList
+          label="Place"
+          name="placeId"
+          placeholder="-- Select a place --"
+          items={places}
+          validationRules={validationRules.placeId}
+        />
+        <LabelInput
+          label='Amount'
+          name='amount'
+          type='number'
+          validationRules={validationRules.amount}
+        />
         <div className='clearfix'>
           <div className='btn-group float-end'>
-            <button type='submit' className='btn btn-primary'>
+            <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
               {transaction?.id
                 ? 'Save transaction'
                 : 'Add transaction'}
             </button>
+            <Link
+              disabled={isSubmitting}
+              className='btn btn-light'
+              to='/transactions'
+            >
+              Cancel
+            </Link>
           </div>
         </div>
       </form>
-    </>
+    </FormProvider>
   );
 }
