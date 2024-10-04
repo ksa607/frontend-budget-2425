@@ -51,7 +51,7 @@ const validationRules = {
   },
 };
 
-export default function TransactionForm({ places = [] }) {
+export default function TransactionForm({ places = [], saveTransaction }) {
   const transaction = EMPTY_TRANSACTION;
 
   const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
@@ -63,11 +63,12 @@ export default function TransactionForm({ places = [] }) {
     },
   });
 
-  const onSubmit = (values) => {
-    if (!isValid) return; // 👈 3
-    console.log(JSON.stringify(values));
-    // Nieuwe transactie moet nog worden opgeslagen
-    reset(); // 👈 7
+  const onSubmit = async (values) => {
+    if (!isValid) return;
+    await saveTransaction(values, {
+      throwOnError: false,
+      onSuccess: () => reset(),
+    });
   };
 
   return (

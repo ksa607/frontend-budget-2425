@@ -12,6 +12,10 @@ export async function getById(url) {
   return data;
 }
 
+export const save = async (url, { arg: body }) => {
+  await axios.post(`${baseUrl}/${url}`, body); // 👈 2
+};
+
 export const deleteById = async (url, { arg: id }) => {
   await axios.delete(`${baseUrl}/${url}/${id}`); 
 };
