@@ -28,7 +28,7 @@ export default function AddOrEditTransaction() {
 
   return (
     <>
-      <h1>Add transaction</h1>
+      <h1>{id ? 'Edit' : 'Add'} transaction</h1>
       <AsyncData
         error={transactionError || placesError || saveError}
         loading={transactionLoading || placesLoading}

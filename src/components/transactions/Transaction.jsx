@@ -29,12 +29,11 @@ const TransactionMemoized = memo(function Transaction({ id, date, amount, user, 
       <td>{place.name}</td>
       <td className='text-end'>{amountFormat.format(amount)}</td>
       <td>
-        <Link to={`/transactions/edit/${id}`} className='btn btn-light'>
-          <IoPencilOutline />
-        </Link>
-        {onDelete ? <button className='btn btn-primary' onClick={handleDelete}>
-          <IoTrashOutline />
-        </button> : ''}
+        {onDelete ?
+          <><Link to={`/transactions/edit/${id}`} className='btn btn-light'>
+            <IoPencilOutline />
+          </Link><button className='btn btn-primary' onClick={handleDelete}><IoTrashOutline /></button></> : ''
+        }
       </td>
     </tr>
   );

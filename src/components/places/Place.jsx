@@ -2,14 +2,16 @@
 import StarRating from './StarRating';
 import { Link } from 'react-router-dom';
 import { IoTrashOutline } from 'react-icons/io5';
+import { memo, useCallback } from 'react';
 
-const Place = ({ id, name, rating, onDelete, onRate }) => {
-  const handleRate = (newRating) => {
+const PlaceMemoized = memo(function Place({ id, name, rating, onDelete, onRate }) {
+  const handleRate = useCallback((newRating) => {
     onRate({ id, name, rating: newRating });
-  };
-  const handleDelete = () => {
+  }, [id, name, onRate]);
+
+  const handleDelete = useCallback(() => {
     onDelete(id);
-  };
+  }, [id, onDelete]);
 
   return (
     <div className='card bg-light border-dark mb-4'>
@@ -24,6 +26,6 @@ const Place = ({ id, name, rating, onDelete, onRate }) => {
       </div>
     </div>
   );
-};
+});
 
-export default Place;
+export default PlaceMemoized;
