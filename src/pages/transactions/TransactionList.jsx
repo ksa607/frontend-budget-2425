@@ -1,11 +1,11 @@
 // src/pages/transactions/TransactionList.jsx
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
 import AsyncData from '../../components/AsyncData';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getAll, deleteById } from '../../api';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function TransactionList() {
   const [text, setText] = useState('');
@@ -29,6 +29,11 @@ export default function TransactionList() {
       }),
     [search, transactions],
   );
+
+  const handleDeleteTransaction = useCallback(async (id) => {
+    await deleteTransaction(id);
+    alert('Transaction is removed');
+  }, [deleteTransaction]);
 
   return (
     <>
@@ -58,7 +63,7 @@ export default function TransactionList() {
 
       <div className='mt-4'>
         <AsyncData loading={isLoading} error={error || deleteError}>
-          <TransactionsTable transactions={filteredTransactions} onDelete={deleteTransaction} />
+          <TransactionsTable transactions={filteredTransactions} onDelete={handleDeleteTransaction} />
         </AsyncData>
       </div>
     </>
