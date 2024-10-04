@@ -3,11 +3,10 @@ import StarRating from './StarRating';
 import { Link } from 'react-router-dom';
 import { IoTrashOutline } from 'react-icons/io5';
 import { memo, useCallback } from 'react';
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/Theme.context';
+import { useThemeColors } from '../../contexts/theme';
 
 const PlaceMemoized = memo(function Place({ id, name, rating, onDelete, onRate }) {
-  const { theme, textTheme } = useContext(ThemeContext);
+  const { theme, textTheme } = useThemeColors();
 
   const handleRate = useCallback((newRating) => {
     onRate({ id, name, rating: newRating });

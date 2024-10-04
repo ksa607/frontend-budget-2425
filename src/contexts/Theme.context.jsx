@@ -1,10 +1,6 @@
 // src/contexts/Theme.context.jsx
 import { createContext, useState, useCallback, useMemo } from 'react';
-
-export const themes = {
-  dark: 'dark',
-  light: 'light',
-};
+import { themes } from './theme';
 
 const switchTheme = (theme) =>
   theme === themes.dark ? themes.light : themes.dark;

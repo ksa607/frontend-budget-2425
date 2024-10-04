@@ -1,10 +1,9 @@
 // src/components/transactions/TransactionsTable.jsx
 import Transaction from './Transaction';
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/Theme.context';
+import { useThemeColors } from '../../contexts/theme';
 
 function TransactionsTable({ transactions, onDelete }) {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useThemeColors();
   if (transactions.length === 0) {
     return (
       <div className='alert alert-info'>There are no transactions yet.</div>
