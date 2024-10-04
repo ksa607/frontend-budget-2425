@@ -10,6 +10,7 @@ import About, { Services, History, Location } from './pages/about/About.jsx';
 import Layout from './pages/Layout';
 import './index.css';
 import AddOrEditTransaction from './pages/transactions/AddOrEditTransaction.jsx';
+import { ThemeProvider } from './contexts/Theme.context';
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>,
 );

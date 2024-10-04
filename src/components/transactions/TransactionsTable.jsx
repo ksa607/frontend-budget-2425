@@ -1,7 +1,10 @@
 // src/components/transactions/TransactionsTable.jsx
 import Transaction from './Transaction';
+import { useContext } from 'react';
+import { ThemeContext } from '../../contexts/Theme.context';
 
 function TransactionsTable({ transactions, onDelete }) {
+  const { theme } = useContext(ThemeContext);
   if (transactions.length === 0) {
     return (
       <div className='alert alert-info'>There are no transactions yet.</div>
@@ -10,7 +13,7 @@ function TransactionsTable({ transactions, onDelete }) {
 
   return (
     <div>
-      <table className='table table-hover table-responsive'>
+      <table className={`table table-hover table-responsive table-${theme}`}>
         <thead>
           <tr>
             <th>Date</th>
