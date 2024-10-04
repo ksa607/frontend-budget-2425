@@ -12,16 +12,14 @@ export async function getById(url) {
   return data;
 }
 
-export const save = async (url, { arg: body }) => {
-  await axios.post(`${baseUrl}/${url}`, body); // 👈 2
-};
+export async function save(url, { arg: { id, ...data } }) {
+  await axios({
+    method: id ? 'PUT' : 'POST',
+    url: `${baseUrl}/${url}/${id ?? ''}`,
+    data,
+  });
+}
 
 export const deleteById = async (url, { arg: id }) => {
   await axios.delete(`${baseUrl}/${url}/${id}`); 
 };
-
-export const updateById = async (url, { arg: body }) => {
-  const { id, ...values } = body;
-  await axios.put(`${baseUrl}/${url}/${id}`, values);
-};
-

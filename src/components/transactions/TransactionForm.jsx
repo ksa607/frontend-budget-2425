@@ -1,5 +1,6 @@
 // src/components/transactions/TransactionForm.jsx
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const EMPTY_TRANSACTION = {
   id: undefined,
@@ -51,10 +52,11 @@ const validationRules = {
   },
 };
 
-export default function TransactionForm({ places = [], saveTransaction }) {
-  const transaction = EMPTY_TRANSACTION;
+export default function TransactionForm({ places = [], transaction = EMPTY_TRANSACTION, saveTransaction }) {
+  const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+    mode: 'onBlur',
     defaultValues: {
       date: toDateInputString(transaction?.date),
       placeId: transaction?.place.id,
@@ -65,9 +67,12 @@ export default function TransactionForm({ places = [], saveTransaction }) {
 
   const onSubmit = async (values) => {
     if (!isValid) return;
-    await saveTransaction(values, {
+    await saveTransaction({
+      id: transaction?.id,
+      ...values,
+    }, {
       throwOnError: false,
-      onSuccess: () => reset(),
+      onSuccess: () => navigate('/transactions'),
     });
   };
 
@@ -138,7 +143,9 @@ export default function TransactionForm({ places = [], saveTransaction }) {
         <div className='clearfix'>
           <div className='btn-group float-end'>
             <button type='submit' className='btn btn-primary'>
-              Add transaction
+              {transaction?.id
+                ? 'Save transaction'
+                : 'Add transaction'}
             </button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import PlacesCards from '../../components/places/PlacesCards';
-import { getAll, updateById, deleteById } from '../../api';
+import { getAll, save, deleteById } from '../../api';
 import AsyncData from '../../components/AsyncData';
 
 export default function PlacesList() {
@@ -9,7 +9,7 @@ export default function PlacesList() {
 
   const { trigger: deletePlace, error: deleteError } = useSWRMutation('places', deleteById);
 
-  const { trigger: savePlace, error: saveError } = useSWRMutation('places', updateById);
+  const { trigger: savePlace, error: saveError } = useSWRMutation('places', save);
 
   return (
     <>
