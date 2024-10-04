@@ -3,8 +3,12 @@ import StarRating from './StarRating';
 import { Link } from 'react-router-dom';
 import { IoTrashOutline } from 'react-icons/io5';
 import { memo, useCallback } from 'react';
+import { useContext } from 'react';
+import { ThemeContext } from '../../contexts/Theme.context';
 
 const PlaceMemoized = memo(function Place({ id, name, rating, onDelete, onRate }) {
+  const { theme, textTheme } = useContext(ThemeContext);
+
   const handleRate = useCallback((newRating) => {
     onRate({ id, name, rating: newRating });
   }, [id, name, onRate]);
@@ -14,7 +18,7 @@ const PlaceMemoized = memo(function Place({ id, name, rating, onDelete, onRate }
   }, [id, onDelete]);
 
   return (
-    <div className='card bg-light border-dark mb-4'>
+    <div className={`card bg-${theme} border-${textTheme} text-${textTheme} mb-4`} >
       <div className='card-body'>
         <h5 className='card-title'>  <Link to={`/places/${id}`}>{name}</Link></h5>
         <div className='card-text'>
@@ -24,7 +28,7 @@ const PlaceMemoized = memo(function Place({ id, name, rating, onDelete, onRate }
           <IoTrashOutline />
         </button>
       </div>
-    </div>
+    </div >
   );
 });
 
