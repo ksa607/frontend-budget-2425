@@ -12,6 +12,8 @@ import './index.css';
 import AddOrEditTransaction from './pages/transactions/AddOrEditTransaction.jsx';
 import { ThemeProvider } from './contexts/Theme.context';
 import { AuthProvider } from './contexts/Auth.context';
+import Login from './pages/Login.jsx';
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -71,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: 'services',
         element: <Navigate to='/about/services' replace />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
       },
       { path: '*', element: <NotFound /> },
     ],
