@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
 export default function SelectList({
-  label, name, placeholder, items, validationRules,...rest
+  label, name, placeholder, items, validationRules, ...rest
 }) {
   const {
     register,

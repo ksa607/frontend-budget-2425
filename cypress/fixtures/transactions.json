@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "amount": -97,
+      "date": "2024-10-01",
+      "user": {
+        "id": 2,
+        "name": "Pieter"
+      },
+      "place": {
+        "id": 4,
+        "name": "Chinees Restaurant"
+      }
+    },
+    {
+      "id": 1,
+      "amount": 100,
+      "date": "2024-10-01",
+      "user": {
+        "id": 2,
+        "name": "Pieter"
+      },
+      "place": {
+        "id": 3,
+        "name": "Irish Pub"
+      }
+    }
+  ]
+}

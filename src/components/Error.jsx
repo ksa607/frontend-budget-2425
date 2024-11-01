@@ -4,7 +4,7 @@ import { isAxiosError } from 'axios';
 export default function Error({ error }) {
   if (isAxiosError(error)) {
     return (
-      <div className='alert alert-danger'>
+      <div className='alert alert-danger' data-cy='axios_error_message'>
         <h4 className='alert-heading'>Oops, something went wrong</h4>
         <p>
           {error?.response?.data?.message || error.message}
@@ -29,5 +29,5 @@ export default function Error({ error }) {
     );
   }
 
-  return null; 
+  return null;
 }

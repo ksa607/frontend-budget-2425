@@ -85,38 +85,45 @@ export default function TransactionForm({ places = [], transaction = EMPTY_TRANS
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className='w-50 mb-3'>
+      <form onSubmit={handleSubmit(onSubmit)} className='mb-5'>
         <LabelInput
           label='User Id'
           name='userId'
           type='number'
           validationRules={validationRules.userId}
+          data-cy='user_input'
         />
         <LabelInput
           label='Date'
           name='date'
           type='date'
           validationRules={validationRules.date}
+          data-cy='date_input'
         />
         <SelectList
-          label="Place"
-          name="placeId"
-          placeholder="-- Select a place --"
+          label='Place'
+          name='placeId'
+          placeholder='-- Select a place --'
           items={places}
           validationRules={validationRules.placeId}
+          data-cy='place_input'
         />
         <LabelInput
           label='Amount'
           name='amount'
           type='number'
           validationRules={validationRules.amount}
+          data-cy='amount_input'
         />
         <div className='clearfix'>
           <div className='btn-group float-end'>
-            <button type='submit' className='btn btn-primary' disabled={isSubmitting}>
-              {transaction?.id
-                ? 'Save transaction'
-                : 'Add transaction'}
+            <button
+              type='submit'
+              className='btn btn-primary'
+              data-cy='submit_transaction'
+              disabled={isSubmitting}
+            >
+              {transaction?.id ? 'Save transaction' : 'Add transaction'}
             </button>
             <Link
               disabled={isSubmitting}
