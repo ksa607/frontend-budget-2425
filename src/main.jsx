@@ -11,7 +11,7 @@ import Layout from './pages/Layout';
 import './index.css';
 import AddOrEditTransaction from './pages/transactions/AddOrEditTransaction.jsx';
 import { ThemeProvider } from './contexts/Theme.context';
-
+import { AuthProvider } from './contexts/Auth.context';
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -79,8 +79,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>,
 );
