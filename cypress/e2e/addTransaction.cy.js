@@ -7,6 +7,7 @@ describe('Add and remove transaction', () => {
     cy.get('[data-cy=date_input]').type('2024-08-01'); 
     cy.get('[data-cy=place_input]').select(3); 
     cy.get('[data-cy=amount_input]').type('200');
+    cy.get('body').click(0, 0);
     cy.get('[data-cy=submit_transaction]').click(); 
 
     cy.get('[data-cy=transaction_user]').eq(9).contains('Pieter');
