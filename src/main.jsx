@@ -14,6 +14,7 @@ import { ThemeProvider } from './contexts/Theme.context';
 import { AuthProvider } from './contexts/Auth.context';
 import Login from './pages/Login.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
+import Logout from './pages/Logout.jsx';
 
 const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/logout',
+        element: <Logout />,
       },
       { path: '*', element: <NotFound /> },
     ],
