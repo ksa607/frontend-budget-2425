@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FormProvider, useForm } from 'react-hook-form';
 import LabelInput from '../components/LabelInput';
 import { useAuth } from '../contexts/auth';
@@ -15,6 +15,7 @@ const validationRules = {
 };
 
 export default function Login() {
+  const { search } = useLocation();
   const { error, loading, login } = useAuth();
   const navigate = useNavigate();
 
@@ -34,13 +35,15 @@ export default function Login() {
     async ({ email, password }) => {
       const loggedIn = await login(email, password);
       if (loggedIn) {
+        // Redirect to the page the user was on before logging in, if present in the URL
+        const params = new URLSearchParams(search);
         navigate({
-          pathname: '/',
+          pathname: params.get('redirect') || '/',
           replace: true,
         });
       }
     },
-    [login, navigate],
+    [login, navigate, search],
   );
 
   return (

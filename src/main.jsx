@@ -13,6 +13,7 @@ import AddOrEditTransaction from './pages/transactions/AddOrEditTransaction.jsx'
 import { ThemeProvider } from './contexts/Theme.context';
 import { AuthProvider } from './contexts/Auth.context';
 import Login from './pages/Login.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/transactions',
+        element: <PrivateRoute />,
         children: [
           {
             index: true,
@@ -41,6 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/places',
+        element: <PrivateRoute />,
         children: [
           {
             index: true,

@@ -58,10 +58,12 @@ export const AuthProvider = ({ children }) => {
       user,
       error: loginError || userError,
       loading: loginLoading || userLoading,
+      isAuthed: Boolean(token),
+      ready: !userLoading,
       login,
       logout,
     }),
-    [user, loginError, loginLoading, userError, userLoading, login, logout],
+    [token, user, loginError, loginLoading, userError, userLoading, login, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
