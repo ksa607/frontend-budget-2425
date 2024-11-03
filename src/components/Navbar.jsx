@@ -28,21 +28,23 @@ export default function Navbar() {
         </div>
         <div className='flex-grow-1'></div>
         {
-          // 👇 2
           isAuthed ? (
-            // 👇 3
             <div className='nav-item my-2 mx-sm-3 my-sm-0'>
               <Link className='nav-link' to='/logout'>
                 Logout
               </Link>
             </div>
           ) : (
-            // 👇 4
-            <div className='nav-item my-2 mx-sm-3 my-sm-0'>
-              <Link className='nav-link' to='/login'>
-                Login
-              </Link>
-            </div>
+            <>
+              <div className='nav-item my-2 mx-sm-3 my-sm-0'>
+                <Link className='nav-link' to='/login'>
+                  Login
+                </Link>
+              </div>
+              <div className="nav-item my-2 mx-sm-3 my-sm-0">
+                <Link className="nav-link" to="/register" data-cy='logout_btn'>Register</Link>
+              </div>
+            </>
           )
         }
         <button

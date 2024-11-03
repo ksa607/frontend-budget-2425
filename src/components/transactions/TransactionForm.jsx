@@ -33,10 +33,6 @@ const toDateInputString = (date) => {
 };
 
 const validationRules = {
-  userId: {
-    required: 'User is required',
-    min: { value: 1, message: 'min 1' },
-  },
   date: {
     required: 'Date is required',
     valueAsDate: true,
@@ -63,7 +59,6 @@ export default function TransactionForm({ places = [], transaction = EMPTY_TRANS
       date: toDateInputString(transaction?.date),
       placeId: transaction?.place.id,
       amount: transaction?.amount,
-      userId: transaction?.user.id,
     },
   });
 
@@ -86,13 +81,6 @@ export default function TransactionForm({ places = [], transaction = EMPTY_TRANS
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className='mb-5'>
-        <LabelInput
-          label='User Id'
-          name='userId'
-          type='number'
-          validationRules={validationRules.userId}
-          data-cy='user_input'
-        />
         <LabelInput
           label='Date'
           name='date'
