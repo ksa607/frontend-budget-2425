@@ -36,7 +36,7 @@ export default function SelectList({
       </select>
       {hasError ? (
         <div className="form-text text-danger">
-          {errors[name]}
+          {errors[name].message}
         </div>
       ) : null}
     </div>
