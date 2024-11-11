@@ -30,7 +30,7 @@ export default function Navbar() {
         {
           isAuthed ? (
             <div className='nav-item my-2 mx-sm-3 my-sm-0'>
-              <Link className='nav-link' to='/logout'>
+              <Link className='nav-link' to='/logout' data-cy="logout_btn">
                 Logout
               </Link>
             </div>
