@@ -1,10 +1,14 @@
-// cypress/e2e/transactions.cy.js
 describe('Transactions list', () => {
+
+  beforeEach(() => {
+    cy.login('pieter.vanderhelst@hogent.be', '12345678');
+  });
+
   it('should show the transactions', () => {
     cy.intercept(
       'GET',
       'http://localhost:9000/api/transactions',
-      { fixture: 'transactions.json' }, // 👈
+      { fixture: 'transactions.json' },
     );
 
     cy.visit('http://localhost:5173');
@@ -15,18 +19,18 @@ describe('Transactions list', () => {
 
   it('should show a loading indicator for a very slow response', () => {
     cy.intercept(
-      'http://localhost:9000/api/transactions', // 👈 1
-      // 👇 2
+      'http://localhost:9000/api/transactions',
       (req) => {
         req.on('response', (res) => {
           res.setDelay(1000);
         });
       },
-    ).as('slowResponse'); // 👈 5
-    cy.visit('http://localhost:5173'); // 👈 3
-    cy.get('[data-cy=loader]').should('be.visible'); // 👈 4
-    cy.wait('@slowResponse'); // 👈 6
-    cy.get('[data-cy=loader]').should('not.exist'); // 👈 7
+    ).as('slowResponse');
+
+    cy.visit('http://localhost:5173');
+    cy.get('[data-cy=loader]').should('be.visible');
+    cy.wait('@slowResponse');
+    cy.get('[data-cy=loader]').should('not.exist');
   });
 
   it('should show all transactions for the Irish pub', () => {
@@ -34,7 +38,7 @@ describe('Transactions list', () => {
     cy.intercept(
       'GET',
       'http://localhost:9000/api/transactions',
-      { fixture: 'transactions.json' }, // 👈
+      { fixture: 'transactions.json' },
     );
     cy.get('[data-cy=transactions_search_input]').type('Ir');
     cy.get('[data-cy=transactions_search_btn]').click();
